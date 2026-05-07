@@ -1,0 +1,41 @@
+[
+    {
+        "domain": ".sider.ai",
+        "expirationDate": 1778134642,
+        "hostOnly": false,
+        "httpOnly": false,
+        "name": "__stripe_sid",
+        "path": "/",
+        "sameSite": "strict",
+        "secure": true,
+        "session": false,
+        "storeId": null,
+        "value": "e5157b97-97bb-44be-aea4-e5da9fbb2315ed1716"
+    },
+    {
+        "domain": ".sider.ai",
+        "expirationDate": 1809668842,
+        "hostOnly": false,
+        "httpOnly": false,
+        "name": "__stripe_mid",
+        "path": "/",
+        "sameSite": "strict",
+        "secure": true,
+        "session": false,
+        "storeId": null,
+        "value": "f2f2fd7e-3506-48f2-92be-b38095c50b4182166c"
+    },
+    {
+        "domain": "sider.ai",
+        "expirationDate": 1780724835,
+        "hostOnly": true,
+        "httpOnly": false,
+        "name": "token",
+        "path": "/",
+        "sameSite": "lax",
+        "secure": true,
+        "session": false,
+        "storeId": null,
+        "value": "Bearer%20eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTM2ODU2OCwicmVnaXN0ZXJfdHlwZSI6Im9hdXRoMiIsImFwcF9uYW1lIjoiQ2hpdENoYXRfV2ViIiwidG9rZW5faWQiOiJhNWRlM2VmYi1mY2E1LTQ0MGMtOGFlMi1lNjVjNDkyMzI5ZWIiLCJpc3MiOiJzaWRlci5haSIsImF1ZCI6WyIiXSwiZXhwIjoxODA5MjM2NzAzLCJuYmYiOjE3NzgxMzI3MDMsImlhdCI6MTc3ODEzMjcwM30.UwOp9WVSNSkvqyPfnJQgcnb34VZtOkWHuCWBPgdZDec"
+    }
+]
