@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Silk Local</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Toolbar -->
+    <header class="toolbar">
+      <div class="nav-buttons">
+        <button id="backBtn" class="nav-btn" title="Back">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button id="forwardBtn" class="nav-btn" title="Forward">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+        <button id="refreshBtn" class="nav-btn" title="Refresh">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 4v6h-6M1 20v-6h6"/>
+            <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+          </svg>
+        </button>
+      </div>
+      
+      <input type="text" id="urlInput" class="url-input" placeholder="Enter URL or search...">
+      
+      <select id="profileSelect" class="profile-select">
+        <option value="">Select Profile...</option>
+      </select>
+      
+      <button id="openBtn" class="open-btn">Open</button>
+    </header>
+
+    <!-- Homepage -->
+    <main id="homepage" class="homepage">
+      <div class="homepage-content">
+        <h1 class="welcome-text">What would you like to browse today?</h1>
+        
+        <div class="search-container">
+          <input type="text" id="homeSearchInput" class="home-search" placeholder="Enter a website address...">
+        </div>
+        
+        <h2 class="quick-profiles-title">Quick Profiles</h2>
+        <div class="quick-profiles" id="quickProfiles">
+          <!-- Quick profile cards will be inserted here -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Browser View -->
+    <webview id="browserView" class="browser-view"></webview>
+
+    <!-- Floating Page Options Button -->
+    <button id="pageOptionsBtn" class="floating-options hidden">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="1"/>
+        <circle cx="12" cy="5" r="1"/>
+        <circle cx="12" cy="19" r="1"/>
+      </svg>
+    </button>
+
+    <!-- Page Options Panel -->
+    <div id="pageOptionsPanel" class="options-panel hidden">
+      <button class="option-item" data-action="simplify">Simplify Page</button>
+      <button class="option-item" data-action="reader">Reader Mode</button>
+      <button class="option-item" data-action="hide-sidebars">Hide Sidebars</button>
+      <button class="option-item" data-action="hide-comments">Hide Comments</button>
+      <button class="option-item" data-action="block-ads">Block Ads</button>
+      <button class="option-item" data-action="block-trackers">Block Trackers</button>
+      <button class="option-item" data-action="reduce-animations">Reduce Animations</button>
+      <button class="option-item" data-action="increase-text">Increase Text Size</button>
+      <button class="option-item" data-action="always-use">Always use this profile for this site</button>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Settings</h2>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <section class="settings-section">
+            <h3>Appearance</h3>
+            <div class="setting-row">
+              <label>Theme</label>
+              <select id="themeSelect">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="system">System</option>
+              </select>
+            </div>
+          </section>
+          
+          <section class="settings-section">
+            <h3>Startup</h3>
+            <div class="setting-row">
+              <label>Startup Page</label>
+              <select id="startupPageSelect">
+                <option value="home">Home</option>
+                <option value="last">Last Session</option>
+              </select>
+            </div>
+          </section>
+          
+          <section class="settings-section">
+            <h3>Default Profile</h3>
+            <div class="setting-row">
+              <label>Default Profile</label>
+              <select id="defaultProfileSelect"></select>
+            </div>
+          </section>
+          
+          <section class="settings-section">
+            <h3>Protection</h3>
+            <div class="setting-row toggle-row">
+              <label>Ads & Tracking Protection</label>
+              <label class="toggle">
+                <input type="checkbox" id="adBlockToggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </section>
+          
+          <section class="settings-section">
+            <h3>Data</h3>
+            <button id="clearCacheBtn" class="action-btn">Clear Cache</button>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Manager Modal -->
+    <div id="profileModal" class="modal hidden">
+      <div class="modal-content modal-large">
+        <div class="modal-header">
+          <h2>Manage Profiles</h2>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="profile-actions">
+            <button id="newProfileBtn" class="action-btn">Create Profile</button>
+            <button id="importProfileBtn" class="action-btn">Import Profile</button>
+            <button id="exportProfileBtn" class="action-btn">Export Selected</button>
+          </div>
+          <div class="profiles-list" id="profilesList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Site Rules Modal -->
+    <div id="rulesModal" class="modal hidden">
+      <div class="modal-content modal-large">
+        <div class="modal-header">
+          <h2>Site Rules</h2>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="rule-form">
+            <input type="text" id="ruleDomain" placeholder="Domain (e.g., youtube.com)">
+            <select id="ruleProfile"></select>
+            <button id="addRuleBtn" class="action-btn">Add Rule</button>
+          </div>
+          <div class="rules-list" id="rulesList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Profile Form -->
+    <div id="editProfileModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="editProfileTitle">Edit Profile</h2>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="profileForm">
+            <input type="hidden" id="profileId">
+            <div class="form-group">
+              <label>Profile Name</label>
+              <input type="text" id="profileName" required>
+            </div>
+            <div class="form-group">
+              <label>User-Agent String</label>
+              <textarea id="profileUserAgent" rows="3" required></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Screen Width</label>
+                <input type="number" id="profileWidth" value="1920">
+              </div>
+              <div class="form-group">
+                <label>Screen Height</label>
+                <input type="number" id="profileHeight" value="1080">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Language</label>
+                <input type="text" id="profileLanguage" value="en-US">
+              </div>
+              <div class="form-group">
+                <label>Timezone</label>
+                <input type="text" id="profileTimezone" value="America/New_York">
+              </div>
+            </div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" id="profileTouch"> Touch Enabled
+              </label>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="action-btn primary">Save Profile</button>
+              <button type="button" id="deleteProfileBtn" class="action-btn danger">Delete</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
